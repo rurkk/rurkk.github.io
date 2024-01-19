@@ -1,2 +1,63 @@
-﻿body {
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.main-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.header-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 2em;
+}
+
+.header-subtitle {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+}
+
+.section-title {
+    color: #3498db;
+}
+
+.experience-item {
+    margin-bottom: 20px;
+}
+
+.experience-title {
+    margin: 0;
+    color: #333;
+}
+
+.skills-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.skills-list li {
+    margin-bottom: 5px;
+}
+
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #777;
 }
