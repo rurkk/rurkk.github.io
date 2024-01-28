@@ -1,11 +1,24 @@
-/* Добавленные стили */
-.email {
-    color: #008000; /* Зеленый цвет для почты */
+.header-content {
+    display: flex;
+    flex-wrap: wrap; /* Разрешает перенос элементов на новую строку */
+    justify-content: space-between;
+    align-items: center;
 }
 
-.phone {
-    color: #008000; /* Зеленый цвет для телефона */
+.header-text {
+    flex: 1;
+    margin-bottom: 20px; /* Расстояние между текстом и изображением */
 }
+
+.header-image {
+    flex-basis: 20%; /* Определяет начальную ширину для изображения */
+    margin-left: auto; /* Выравниваем изображение справа */
+}
+
+    .header-image img {
+        max-width: 100%; /* Сделать изображение адаптивным */
+        height: auto; /* Поддерживает соотношение сторон */
+    }
 
 /* Ваши остальные стили */
 @font-face {
@@ -26,12 +39,19 @@ body {
 header {
     background-color: #3c3f41;
     color: #ffffff;
-    text-align: center;
-    padding: 1em;
+    text-align: left;
+    padding: 2em;
+    padding-left: 2em; /* Уменьшаем левый отступ для масштабирования */
+    padding-right: 2em; /* Уменьшаем правый отступ для масштабирования */
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 20px auto;
 }
 
 main {
-    max-width: 800px;
+    max-width: 850px;
     margin: 20px auto;
     padding: 20px;
     background-color: #282c2e;
@@ -58,6 +78,10 @@ h2 {
     color: #ce9178;
 }
 
+.vvv {
+    color: #dfd33a;
+}
+
 footer {
     text-align: center;
     padding: 10px;
@@ -66,4 +90,12 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+/* Медиа-запрос для устройств с максимальной шириной 768px (например, для телефонов) */
+@media screen and (max-width: 768px) {
+    header {
+        padding-left: 1em; /* Уменьшаем левый отступ для масштабирования на мобильных устройствах */
+        padding-right: 1em; /* Уменьшаем правый отступ для масштабирования на мобильных устройствах */
+    }
 }
