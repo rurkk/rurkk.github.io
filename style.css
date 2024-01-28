@@ -1,5 +1,12 @@
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('./JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font-family: 'Monaco', serif; /* Измененный шрифт */
+    font-family: 'JetBrains Mono', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #111;
