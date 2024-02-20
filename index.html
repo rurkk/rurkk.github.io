@@ -3,80 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"> <!-- Подключение внешних стилей -->
-    <title>Муллаянов Рауль</title>
+    <title>График магнитной индукции</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="header-text">
-                <h1><span class="value">Муллаянов Рауль</span></h1>
-                <p><span class="selector">почта:</span> raulmullayanov1@yandex.ru</p>
-                <p><span class="selector">телефон:</span> 89956222171</p>
-                <p><span class="selector">tg:</span> @rurkkk</p>
-                <p><span class="selector">gh:</span> <a>https://github.com/rurkk</a></p>
-            </div>
-            <div class="header-image">
-                <img src="./your_photo.jpg" alt="Фотография Рауля Муллаянова">
-            </div>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="myChart"></canvas>
+
+        <div>
+            <label for="radius">Радиус катушек:</label>
+            <input type="number" id="radius" value="1">
+
+            <label for="turns">Количество витков:</label>
+            <input type="number" id="turns" value="1">
+
+            <label for="current">Величина тока:</label>
+            <input type="number" id="current" value="1">
+
+            <button onclick="updateChart()">Обновить график</button>
         </div>
-    </header>
+    </div>
 
-    <main>
-        <section>
-            <h2><span class="vvv">Обо мне</span></h2>
-            <p>
-                <span class="value">Junior</span> фуллстэк-разработчик с опытом работы в области разработки бэкенда на <span class="value">C#</span> и фронта на <span class="value">React</span>. Кроме того, у меня есть опыт в разработке на <span class="value">C++</span> и <span class="value">Java</span>
-            </p>
-        </section>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
 
-        <section>
-            <h2><span class="vvv">Обучение</span></h2>
-            <p>
-                Студент 3 курса бакалавриата
-                <span class="value">ИТМО</span>
-            </p>
-            <p>
-                Факультет: <span class="value">Информационные системы и технологии</span>
-            </p>
-            <p>
-                Пройденные курсы: <span class="value">
-                    Алгоритмы и структуры данных,
-                    Паттерны программирования на C#, Объектно-ориентированное программирование на C++, технологии разработки на Java,
-                    базы данных, система контроля версий GIT, софт-скиллы, дискретная математика, высшая математика, ЭВМ
-                </span>
-            </p>
-        </section>
+        function calculateB(x, R, n, I) {
+            return ((4e-7 * Math.PI * I * R**2 * n) / 2) * ((1 / (x**2 + R**2)**(3/2)) + (1 / ((x - R)**2 + R**2)**(3/2)));
+        }
 
-        <section>
-            <h2><span class="vvv">Навыки</span></h2>
-            <p>
-                Опыт работы с технологиями и инструментами:
-                <span class="value">C#, ASP.NET, IIS, JS, React, MVC, SQL Server, PostgreSQL, Java, Patterns, github, C++17, Python</span>
-            </p>
-            <p>Знание английского на уровне <span class="value">Advanced</span></p>
-            
-        </section>
+        var initialData = {
+            labels: [],
+            datasets: [{
+                label: 'Магнитная индукция B(x)',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        };
 
-        <section>
-            <h2><span class="vvv">Опыт</span></h2>
-            
-            <p>
-                В <span class="value">Аутсорсинговой компании</span>
-                разработал <span class="value">ASP.NET React</span> веб-приложение на <span class="value">IIS</span> сервере
-                для визуализации данных кривых с аутентификацией по ролям для обучения студентов в ИТМО на факультете физики и проведения различных опытов
-            </p>
-            <p>
-                Много различных проектов для освоения паттернов проектирования на gh
-            </p>
-            <p>
-                Дополнительный опыт работы с базами данных, включая <span class="value">SQL Server</span> и <span class="value">PostgreSQL</span>
-            </p>
-            <p>
-                Участие в олимпиадах по программированию, хакатонах и проектах с использованием современных технологий и методов разработки
-            </p>
-        </section>
+        var initialOptions = {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                },
+                y: {
+                    type: 'linear',
+                    position: 'left'
+                }
+            }
+        };
 
-    </main>
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: initialData,
+            options: initialOptions
+        });
+
+        function updateChart() {
+            var radius = parseFloat(document.getElementById('radius').value);
+            var turns = parseFloat(document.getElementById('turns').value);
+            var current = parseFloat(document.getElementById('current').value);
+
+            var numberOfPoints = 1000; // Больше точек
+var xValues = Array.from({ length: numberOfPoints }, (_, i) => i / 5 - numberOfPoints / 10);
+            var yValues = xValues.map(x => calculateB(x, radius, turns, current));
+
+            myChart.data.labels = xValues;
+            myChart.data.datasets[0].data = yValues;
+            myChart.update();
+        }
+
+        updateChart(); // Инициализация графика с параметрами по умолчанию
+    </script>
 </body>
 </html>
