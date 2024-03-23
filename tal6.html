@@ -2,94 +2,145 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Фазовый портрет колебаний в LCR-контуре</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        #container {
+            display: flex;
+        }
+
+        #formContainer {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-right: 5px;
+        }
+
+        #graphContainer {
+            flex: 2;
+            margin-left: 30px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+    </style>
 </head>
 <body>
 
-<!-- Секция заголовка -->
-<h2 style="text-align:left;">Фазовый портрет колебаний в LCR-контуре</h2>
+    <!-- Секция заголовка -->
+    <h2>Фазовый портрет колебаний в LCR-контуре</h2>
 
-<!-- Форма для ввода параметров -->
-<div style="display:flex; justify-content:left;">
-    <form id="inputForm" style="text-align:left;">
-        <label for="inductance">Индуктивность (Гн):</label>
-        <input type="number" id="inductance" name="inductance" step="any" value="1.0" required>
-        <label for="resistance">Сопротивление (Ом):</label>
-        <input type="number" id="resistance" name="resistance" step="any" value="0.5" required>
-        <label for="capacitance">Емкость конденсатора (Ф):</label>
-        <input type="number" id="capacitance" name="capacitance" step="any" value="0.1" required>
-        <label for="initialCharge">Начальный заряд (Кл):</label>
-        <input type="number" id="initialCharge" name="initialCharge" step="any" value="1.0" required>
-        <input type="submit" value="Построить график">
-    </form>
-</div>
+    <div id="container">
+        <!-- Форма для ввода параметров -->
+        <div id="formContainer">
+            <form id="inputForm">
+                <label for="inductance">Индуктивность (Гн):</label>
+                <input type="number" id="inductance" name="inductance" step="any" value="1.0" required><br>
+                <label for="resistance">Сопротивление (Ом):</label>
+                <input type="number" id="resistance" name="resistance" step="any" value="1.0" required><br>
+                <label for="capacitance">Емкость конденсатора (Ф):</label>
+                <input type="number" id="capacitance" name="capacitance" step="any" value="0.1" required><br>
+                <label for="initialCharge">Начальный заряд (Кл):</label>
+                <input type="number" id="initialCharge" name="initialCharge" step="any" value="1.0" required><br>
+                <input type="submit" value="Построить график">
+            </form>
+        </div>
 
-<!-- Блок для отображения графика -->
-<div id="phasePortrait" style="width:1000px;height:800px;margin:0 auto;"></div>
+        <!-- Блок для отображения графика -->
+        <div id="graphContainer" style="width:1000px; height:800px;"></div>
+    </div>
 
-<script>
-document.getElementById('inputForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-    var L = parseFloat(document.getElementById('inductance').value);
-    var R = parseFloat(document.getElementById('resistance').value);
-    var C = parseFloat(document.getElementById('capacitance').value);
-    var q0 = parseFloat(document.getElementById('initialCharge').value);
+            var L = parseFloat(document.getElementById('inductance').value);
+            var R = parseFloat(document.getElementById('resistance').value);
+            var C = parseFloat(document.getElementById('capacitance').value);
+            var q0 = parseFloat(document.getElementById('initialCharge').value);
 
-    drawPhasePortrait(L, R, C, q0);
-});
+            drawPhasePortrait(L, R, C, q0);
+        });
 
-// Инициализируем пустую плоскость для графика
-Plotly.newPlot('phasePortrait', [{x: [], y: []}], {
-    xaxis: { title: 'Ток (А)' },
-    yaxis: { title: 'Напряжение (В)' }
-});
+        // Инициализируем пустую плоскость для графика
+        Plotly.newPlot('graphContainer', [{ x: [], y: [] }], {
+            xaxis: { title: 'Ток (А)' },
+            yaxis: { title: 'Напряжение (В)' }
+        });
 
 
-function drawPhasePortrait(L, R, C, q0) {
-    var omega0 = Math.sqrt(1/(L*C));
-    var alpha = R/(2*L);
-    var i0 = 0; // Начальный ток
+        function drawPhasePortrait(L, R, C, q0) {
+            var omega0 = Math.sqrt(1 / (L * C));
+            var alpha = R / (2 * L);
+            var i0 = 0;
 
-    var dt = 0.01; // Шаг по времени
-    var q = q0; // Текущий заряд
-    var i = i0; // Текущий ток
+            var dt = 0.01;
+            var q = q0;
+            var i = i0;
 
-    var voltageData = [];
-    var currentData = [];
-    
-    // Цикл для расчёта значений тока и напряжения
-    for (var step = 0; step < 5000; step++) {
-        var dq = i * dt;
-        var di = (-R * i - q / C) / L * dt;
-        q += dq;
-        i += di;
-        
-        voltageData.push(q / C);
-        currentData.push(i);
-    }
+            var voltageData = [];
+            var currentData = [];
 
-    // Данные для построения фазового портрета
-    var data = [{
-        x: currentData,
-        y: voltageData,
-        mode: 'lines',
-        type: 'scatter',
-        name: 'Фазовый портрет'
-    }];
+            for (var step = 0; step < 5000; step++) {
+                var dq = i * dt;
+                var di = (-R * i - q / C) / L * dt;
+                q += dq;
+                i += di;
 
-    // Настройки отображения графика
-    var layout = {
-        xaxis: { title: 'Ток (А)' },
-        yaxis: { title: 'Напряжение (В)' },
-        hovermode: 'closest'
-    };
+                voltageData.push(q / C);
+                currentData.push(i);
+            }
 
-    // Создание графика с использованием Plotly
-    Plotly.newPlot('phasePortrait', data, layout);
-}
-</script>
+            var data = [{
+                x: currentData,
+                y: voltageData,
+                mode: 'lines',
+                type: 'scatter',
+                name: 'Фазовый портрет',
+                line: {
+                    color: 'green'
+                }
+                }];
+
+            var layout = {
+                xaxis: { title: 'Ток (А)' },
+                yaxis: { title: 'Напряжение (В)' },
+                hovermode: 'closest'
+            };
+
+            Plotly.newPlot('graphContainer', data, layout);
+        }
+    </script>
 
 </body>
 </html>
