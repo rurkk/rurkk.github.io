@@ -1,154 +1,156 @@
+
+
+
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Отчет по моделированию электрогенератора</title>
-  <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.2/css/bulma.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <title>Моделирование электрической цепи</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        canvas {
+            max-width: calc(100% - 420px);
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">Моделирование электрогенератора: вращение контура в магнитном поле</h1>
 
-      <form id="parametersForm">
-        <div class="field">
-          <label class="label" for="magneticField">Величина магнитного поля (Тл):</label>
-          <div class="control">
-            <input class="input" type="number" id="magneticField" step="0.01" required>
-          </div>
-        </div>
+    <form id="parametersForm">
+        <label for="initialCurrent">Силы тока I0 (A):</label>
+        <input type="number" id="initialCurrent" step="0.01" required>
 
-        <div class="field">
-          <label class="label" for="rotationFrequency">Частота вращения (кГц):</label>
-          <div class="control">
-            <input class="input" type="number" id="rotationFrequency" step="0.01" required>
-          </div>
-        </div>
+        <label for="resistance">Сопротивление R (Ом):</label>
+        <input type="number" id="resistance" step="0.01" required>
 
-        <div class="field">
-          <label class="label" for="circuitResistance">Сопротивление контура (Ом):</label>
-          <div class="control">
-            <input class="input" type="number" id="circuitResistance" step="0.01" required>
-          </div>
-        </div>
+        <label for="inductance">Индуктивность L (Гн):</label>
+        <input type="number" id="inductance" step="0.01" required>
 
-        <div class="field">
-          <div class="control">
-            <button class="button is-primary" type="button" onclick="updateCharts()">Обновить графики</button>
-          </div>
-        </div>
-      </form>
+        <button type="button" onclick="updateChart('closing')">График замыкания</button>
+        <button type="button" onclick="updateChart('opening')">График размыкания</button>
+    </form>
 
-      <div class="columns">
-        <div class="column">
-          <canvas id="emfChart"></canvas>
-        </div>
-        <div class="column">
-          <canvas id="currentChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
+    <canvas id="currentChart"></canvas>
 
-  <script>
-    var options1 = {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Время, с'
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'ЭДС индукции, кВ'
-          }
+    <script>
+        var options = {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Время, с'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Сила тока, А'
+                    }
+                }
+            }
+        };
+
+        var currentData = {
+            labels: [],
+            datasets: [{
+                label: 'Ток I(t)',
+                data: [],
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        };
+
+        var currentContext = document.getElementById('currentChart').getContext('2d');
+        var currentChart = new Chart(currentContext, {
+            type: 'line',
+            data: currentData,
+            options: options
+        });
+
+        function simulateGenerator(initialCurrent, tau, mode) {
+            let timeArray = [];
+            let currentValues = [];
+            let dt = 0.01; // Шаг времени
+            let timeMax = 10; // Максимальное значение времени для симуляции
+
+            for (let time = 0; time <= timeMax; time += dt) {
+                let current;
+                if (mode === 'closing') {
+                    // Расчет тока для замыкания цепи
+                    current = initialCurrent * (1 - Math.exp(-time / tau));
+                } else {
+                    // Расчет тока для размыкания цепи
+                    current = initialCurrent * Math.exp(-time / tau);
+                }
+                currentValues.push(current);
+                timeArray.push(time.toFixed(2));
+            }
+
+            return { timeArray, currentValues };
         }
-      }
-    };
-    
 
-    var options2 = {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Время, с'
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Сила тока, А'
-          }
+        function updateChart(mode) {
+            var initialCurrent = parseFloat(document.getElementById('initialCurrent').value);
+            var resistance = parseFloat(document.getElementById('resistance').value);
+            var inductance = parseFloat(document.getElementById('inductance').value);
+            var tau = inductance / resistance; // Рассчитываем постоянную времени релаксации
+
+            var { timeArray, currentValues } = simulateGenerator(initialCurrent, tau, mode);
+
+            currentData.labels = timeArray;
+            currentData.datasets[0].data = currentValues;
+            currentData.datasets[0].label = mode === 'closing' ? 'Ток при замыкании I(t)' : 'Ток при размыкании I(t)';
+
+            currentChart.update();
         }
-      }
-    };
-
-    function updateCharts() {
-      var magneticField = parseFloat(document.getElementById('magneticField').value);
-      var rotationFrequency = parseFloat(document.getElementById('rotationFrequency').value);
-      var circuitResistance = parseFloat(document.getElementById('circuitResistance').value);
-
-      var {timeArray, emfValues, currentValues} = simulateGenerator(magneticField, rotationFrequency, circuitResistance)
-
-      emfData.labels = timeArray;
-      emfData.datasets[0].data = emfValues;
-      currentData.labels = timeArray;
-      currentData.datasets[0].data = currentValues;
-
-      emfChart.update();
-      currentChart.update();
-    }
-
-    function simulateGenerator(magneticField, rotationFrequency, circuitResistance) {
-      let timeArray = [];
-      let emfValues = [];
-      let currentValues = [];
-
-      const dt = 0.01;
-      const timeMax = 10;
-      let angularVelocity = 2 * Math.PI * rotationFrequency
-
-      for (let time = 0; time <= timeMax; time += dt) {
-        let emf = -magneticField * angularVelocity * Math.sin(angularVelocity * time);
-        let current = emf / circuitResistance;
-
-        timeArray.push(time.toFixed(2));
-        emfValues.push(emf);
-        currentValues.push(current);
-      }
-
-      return { timeArray, emfValues, currentValues };
-    }
-
-    var emfData = {
-      labels: [],
-      datasets: [{
-        label: 'ЭДС E(t)',
-        data: [],
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    };
-
-    var currentData = {
-      labels: [],
-      datasets: [{
-        label: 'Индукционный ток I(t)',
-        data: [],
-        borderColor: 'rgb(255, 99, 132)',
-        tension: 0.1
-      }]
-    };
-
-    var emfContext = document.getElementById('emfChart').getContext('2d');
-    var emfChart = new Chart(emfContext, { type: 'line', data: emfData, options: options1 });
-
-    var currentContext = document.getElementById('currentChart').getContext('2d');
-    var currentChart = new Chart(currentContext, { type: 'line', data: currentData, options: options2 });
-  </script>
+    </script>
 </body>
 </html>
