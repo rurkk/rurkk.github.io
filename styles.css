@@ -13,15 +13,22 @@ header {
     padding: 20px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    display: inline;
     margin: 0 15px;
 }
 
@@ -31,10 +38,10 @@ nav ul li a {
 }
 
 main {
-    padding: 20px;
+    padding: 80px 20px 20px;
 }
 
-section {
+section, aside {
     background: #fff;
     margin: 20px 0;
     padding: 20px;
@@ -50,40 +57,73 @@ p {
     margin: 10px 0;
 }
 
-blockquote {
-    border-left: 4px solid #007BFF;
-    padding-left: 10px;
-    color: #555;
-    font-style: italic;
+.table-container {
+    display: grid;
+    overflow-x: auto;
 }
 
-aside {
-    background: #e9ecef;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #343a40;
-    color: #fff;
+table, th, td {
+    border: 1px solid #ddd;
 }
 
-strong {
-    color: #007BFF;
+th, td {
+    padding: 12px;
+    text-align: left;
 }
 
-em {
-    color: #dc3545;
+thead {
+    background-color: #007BFF;
+    color: white;
 }
 
-sup {
-    font-size: smaller;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+    background-color: #fff;
 }
 
 img {
     max-width: 100%;
     height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    footer {
+        font-size: 0.9em;
+    }
+
+    .table-container {
+        display: block;
+        overflow-x: scroll;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .table-container table {
+        font-size: 0.9em;
+    }
+
+    footer {
+        padding: 15px;
+    }
 }
