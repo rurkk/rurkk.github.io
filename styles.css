@@ -78,7 +78,7 @@ th, td {
 
 thead {
     background-color: #007BFF;
-    color: white;
+    color: rgb(30, 0, 255);
 }
 
 tr:nth-child(even) {
