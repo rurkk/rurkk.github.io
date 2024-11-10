@@ -100,10 +100,6 @@ img {
         text-align: center;
     }
 
-    nav ul {
-        flex-direction: column;
-    }
-
     nav ul li {
         margin: 10px 0;
     }
