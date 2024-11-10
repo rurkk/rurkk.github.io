@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Резюме и портфолио разработчика">
-        <meta name="keywords" content="резюме, портфолио, разработчик, веб-разработка">
-        <title>Резюме - Портфолио</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Резюме и портфолио разработчика">
+    <meta name="keywords" content="резюме, портфолио, разработчик, веб-разработка">
+    <title>Резюме - Портфолио</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
 <header>
@@ -16,16 +16,9 @@
             <li><a href="#about">О себе</a></li>
             <li><a href="#skills">Навыки</a></li>
             <li><a href="#portfolio">Портфолио</a></li>
-            <li><a href="#contact">Контакты</a></li>
+            <li><a href="#table">Грид</a></li>
         </ul>
     </nav>
-    <pre>
-        ___   _____ ______________     ___    ____  ______
-       /   | / ___// ____/  _/  _/    /   |  / __ \/_  __/
-      / /| | \__ \/ /    / / / /     / /| | / /_/ / / /   
-     / ___ |___/ / /____/ /_/ /     / ___ |/ _, _/ / /    
-    /_/  |_/____/\____/___/___/    /_/  |_/_/ |_| /_/     
-    </pre>
 </header>
 
 <main>
@@ -36,6 +29,13 @@
         <blockquote>
             "Дело не в том, сколько ты знаешь, а в том, как ты это применяешь."
         </blockquote>
+        <pre>
+            ___   _____ ______________     ___    ____  ______
+           /   | / ___// ____/  _/  _/    /   |  / __ \/_  __/
+          / /| | \__ \/ /    / / / /     / /| | / /_/ / / /   
+         / ___ |___/ / /____/ /_/ /     / ___ |/ _, _/ / /    
+        /_/  |_/____/\____/___/___/    /_/  |_/_/ |_| /_/     
+        </pre>
     </section>
 
     <section id="skills">
@@ -65,7 +65,7 @@
         <article>
             <h3>Проект 2</h3>
             <p>Сайт портфолио.</p>
-            <img class="project_img project_img_long" src="img/project2.jpg" alt="project2">
+            <img class="project_img" src="img/project2.jpg" alt="project2">
         </article>
     </section>
 
@@ -81,6 +81,38 @@
     </aside>
     
 </main>
+
+<section id="table">
+    <h2>Таблица с данными</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Возраст</th>
+                    <th>Город</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Рауль</td>
+                    <td>25</td>
+                    <td>Питер</td>
+                </tr>
+                <tr>
+                    <td>Алексей</td>
+                    <td>30</td>
+                    <td>Москва</td>
+                </tr>
+                <tr>
+                    <td>Мария</td>
+                    <td>28</td>
+                    <td>Екатеринбург</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
 <footer>
     <h5>Контакты</h5>
