@@ -38,7 +38,12 @@ nav ul li a {
 }
 
 main {
-    padding: 80px 20px 20px;
+    padding: 158px 20px 20px;
+}
+
+a.active {
+    font-weight: bold;
+    color: #030912;
 }
 
 section, aside {
@@ -126,4 +131,15 @@ img {
     footer {
         padding: 15px;
     }
+}
+
+nav ul li a {
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #f0f0f0;
 }
