@@ -39,33 +39,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.length === 0) {
             resultContainer.innerHTML = '<p>Нет данных для отображения.</p>';
         } else {
-            const table = document.createElement('table');
-            const header = document.createElement('thead');
-            header.innerHTML = `
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Email</th>
-                    <th>Комментарий</th>
-                </tr>
-            `;
-            table.appendChild(header);
-
-            const tbody = document.createElement('tbody');
+            resultContainer.innerHTML = ''; // Clear any previous content
+    
             data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.name}</td>
-                    <td>${item.email}</td>
-                    <td>${item.body}</td>
+                const commentCard = document.createElement('div');
+                commentCard.classList.add('comment-card');
+                
+                const cardHeader = document.createElement('div');
+                cardHeader.classList.add('comment-card-header');
+                cardHeader.innerHTML = `
+                    <strong>${item.name}</strong> 
+                    <span class="comment-email">(${item.email})</span>
                 `;
-                tbody.appendChild(row);
+    
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('comment-card-body');
+                cardBody.innerHTML = `
+                    <p>${item.body}</p>
+                `;
+    
+                commentCard.appendChild(cardHeader);
+                commentCard.appendChild(cardBody);
+    
+                resultContainer.appendChild(commentCard);
             });
-
-            table.appendChild(tbody);
-            resultContainer.innerHTML = '';
-            resultContainer.appendChild(table);
         }
     }
 
