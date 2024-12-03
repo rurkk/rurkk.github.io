@@ -2,17 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="О себе - Портфолио разработчика">
-    <meta name="keywords" content="о себе, портфолио, разработчик, веб-разработка">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>О себе - Портфолио</title>
+    <meta name="description" content="Mock запрос">
+    <meta name="keywords" content="запрос">
+    <title>Mock запрос</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts/stats.js" defer></script>
+    <script src="scripts/fetch.js" defer></script>
 </head>
 <body>
 
 <header>
-    <h1>Рауль Муллаянов</h1>
+    <h1>Mock запрос</h1>
     <nav>
         <ul>
             <li><a href="about.html">О себе</a></li>
@@ -26,19 +26,13 @@
 </header>
 
 <main>
-    <section id="skills">
-        <h2>Навыки</h2>
-        <h3>Frontend</h3>
-        <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-        </ul>
-        <h3>Backend</h3>
-        <ul>
-            <li>C#</li>
-            <li>Java</li>
-        </ul>
+    <section id="fetch">
+        <h2>Создание таблицы</h2>
+        <div id="preloader" style="display:none;">
+            <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." />
+        </div>
+        <div id="error-message" style="display:none; color: red;">Что-то пошло не так!</div>
+        <div id="resultContainer"></div>
     </section>
 </main>
 
