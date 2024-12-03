@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('tableForm');
     const resultContainer = document.getElementById('resultContainer');
 
-    // Проверяем, есть ли сохраненные настройки в localStorage
     if (localStorage.getItem('tableSettings')) {
         const savedSettings = JSON.parse(localStorage.getItem('tableSettings'));
         document.getElementById('days').value = savedSettings.days;
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('language').value = savedSettings.language;
     }
 
-    // Обработка отправки формы
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -18,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const maxLessons = document.getElementById('maxLessons').value;
         const language = document.getElementById('language').value;
 
-        // Сохраняем параметры в localStorage
         const tableSettings = {
             days: days,
             maxLessons: maxLessons,
@@ -26,39 +23,52 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         localStorage.setItem('tableSettings', JSON.stringify(tableSettings));
 
-        // Генерируем таблицу
         generateTable(days, maxLessons, language);
     });
 
-    // Функция генерации таблицы
     function generateTable(days, maxLessons, language) {
-        let tableHTML = `<table><thead><tr><th>${language === 'ru' ? 'День' : 'Day'}</th>`;
-
-        // Создаем заголовки для занятий
+        const table = document.createElement('table');
+        
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headerDay = document.createElement('th');
+        headerDay.textContent = language === 'ru' ? 'День' : 'Day';
+        headerRow.appendChild(headerDay);
+        
         for (let i = 1; i <= maxLessons; i++) {
-            tableHTML += `<th>${language === 'ru' ? 'Занятие ' + i : 'Lesson ' + i}</th>`;
+            const headerLesson = document.createElement('th');
+            headerLesson.textContent = language === 'ru' ? 'Занятие ' + i : 'Lesson ' + i;
+            headerRow.appendChild(headerLesson);
         }
-        tableHTML += `</tr></thead><tbody>`;
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
 
-        // Получаем сохраненные данные из localStorage, если они есть
+        const tbody = document.createElement('tbody');
         let savedData = JSON.parse(localStorage.getItem('tableData')) || [];
 
-        // Создаем строки для каждого дня
         for (let i = 1; i <= days; i++) {
-            tableHTML += `<tr><td>${language === 'ru' ? 'День ' + i : 'Day ' + i}</td>`;
+            const row = document.createElement('tr');
+            const dayCell = document.createElement('td');
+            dayCell.textContent = language === 'ru' ? 'День ' + i : 'Day ' + i;
+            row.appendChild(dayCell);
             
             for (let j = 1; j <= maxLessons; j++) {
+                const cell = document.createElement('td');
                 const cellValue = savedData[i - 1] && savedData[i - 1][j - 1] ? savedData[i - 1][j - 1] : (language === 'ru' ? 'Тема ' + j : 'Topic ' + j);
-                tableHTML += `<td contenteditable="true" data-day="${i}" data-lesson="${j}">${cellValue}</td>`;
+                cell.setAttribute('contenteditable', 'true');
+                cell.setAttribute('data-day', i);
+                cell.setAttribute('data-lesson', j);
+                cell.textContent = cellValue;
+                row.appendChild(cell);
             }
             
-            tableHTML += `</tr>`;
+            tbody.appendChild(row);
         }
 
-        tableHTML += `</tbody></table>`;
-        resultContainer.innerHTML = tableHTML;
+        table.appendChild(tbody);
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(table);
 
-        // Добавляем обработчик событий для редактируемых ячеек
         const editableCells = resultContainer.querySelectorAll('td[contenteditable="true"]');
         editableCells.forEach(cell => {
             cell.addEventListener('blur', function () {
@@ -66,25 +76,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const lesson = cell.getAttribute('data-lesson');
                 const newValue = cell.textContent;
 
-                // Сохраняем данные в localStorage
                 saveTableData(day, lesson, newValue);
             });
         });
     }
 
-    // Функция для сохранения данных в localStorage
     function saveTableData(day, lesson, value) {
         let tableData = JSON.parse(localStorage.getItem('tableData')) || [];
         
-        // Если в массиве нет данных для дня, создаем новый
         if (!tableData[day - 1]) {
             tableData[day - 1] = [];
         }
 
-        // Сохраняем значение в нужную ячейку
         tableData[day - 1][lesson - 1] = value;
 
-        // Обновляем localStorage
         localStorage.setItem('tableData', JSON.stringify(tableData));
     }
 });
