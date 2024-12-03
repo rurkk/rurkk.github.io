@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.length === 0) {
             resultContainer.innerHTML = '<p>Нет данных для отображения.</p>';
         } else {
-            resultContainer.innerHTML = ''; // Clear any previous content
+            resultContainer.innerHTML = '';
     
             data.forEach(item => {
                 const commentCard = document.createElement('div');
