@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Конструктор таблиц">
+    <meta name="keywords" content="конструктор, таблица, расписание, локальное хранилище">
+    <title>Конструктор таблиц</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts/stats.js" defer></script>
+    <script src="scripts/constructor.js" defer></script>
+</head>
+<body>
+
+<header>
+    <h1>Конструктор таблиц</h1>
+    <nav>
+        <ul>
+            <li><a href="about.html">О себе</a></li>
+            <li><a href="skills.html">Навыки</a></li>
+            <li><a href="portfolio.html">Портфолио</a></li>
+            <li><a href="grid.html">Грид</a></li>
+            <li><a href="constructor.html">Конструктор</a></li>
+            <li><a href="fetch.html">Запрос</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section id="constructor">
+        <h2>Создание таблицы</h2>
+        <form id="tableForm">
+            <label for="days">Дни недели:</label>
+            <select id="days" name="days">
+                <option value="5">5 дней</option>
+                <option value="6">6 дней</option>
+            </select>
+
+            <label for="maxLessons">Максимальное количество занятий:</label>
+            <input type="number" id="maxLessons" name="maxLessons" min="1" max="10" value="5">
+
+            <label for="language">Язык:</label>
+            <select id="language" name="language">
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+            </select>
+
+            <button type="submit">Создать таблицу</button>
+        </form>
+
+        <div id="resultContainer"></div>
+
+    </section>
+</main>
+
+<footer>
+    <h5>Контакты</h5>
+    <address>
+        <p>Email: <a href="mailto:raulmullayanov@yandex.ru">raulmullayanov@yandex.ru</a></p>
+        <p>Телефон: <a href="tel:+79876222101">+7 (987) 622-21-01</a></p>
+    </address>
+    <div id="load-time"></div>
+</footer>
+
+</body>
+</html>

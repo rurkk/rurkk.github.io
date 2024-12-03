@@ -1,0 +1,289 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background: #007BFF;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+main {
+    padding: 158px 20px 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #f0f0f0;
+}
+
+nav ul li a.active {
+    font-weight: bold;
+    color: #030912;
+}
+
+form {
+    margin: 20px 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+form select, form input, form button {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+#resultContainer {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+section, aside {
+    background: #fff;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 10px 0;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.table-container {
+    display: grid;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+thead {
+    background-color: #007BFF;
+    color: rgb(30, 0, 255);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    main {
+        padding: 158px 20px 20px;
+    }
+
+    .table-container {
+        display: block;
+        overflow-x: scroll;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .table-container table {
+        font-size: 0.9em;
+    }
+
+    footer {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+}
+
+#preloader {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+    color: #007BFF;
+}
+
+#error-message {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 16px;
+    color: red;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+#resultContainer {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.comment-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.comment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.comment-card-header {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #007BFF;
+}
+
+.comment-card-header strong {
+    font-weight: bold;
+}
+
+.comment-email {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.comment-card-body {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.comment-card-body p {
+    margin: 0;
+}
+
+#preloader {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+    color: #007BFF;
+}
+
+#error-message {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 16px;
+    color: red;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding-top: 100px;
+    }
+
+    #resultContainer {
+        grid-template-columns: 1fr;
+    }
+}
