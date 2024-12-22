@@ -29,34 +29,39 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Ошибка:', error);
             errorMessage.style.display = 'block';
-            errorMessage.innerHTML = `⚠ Что-то пошло не так: ${error.message}`;
+            errorMessage.textContent = `⚠ Что-то пошло не так: ${error.message}`;
         } finally {
             preloader.style.display = 'none';
         }
     }
 
     function renderData(data) {
+        resultContainer.innerHTML = '';
+
         if (data.length === 0) {
-            resultContainer.innerHTML = '<p>Нет данных для отображения.</p>';
+            const noDataMessage = document.createElement('p');
+            noDataMessage.textContent = 'Нет данных для отображения.';
+            resultContainer.appendChild(noDataMessage);
         } else {
-            resultContainer.innerHTML = '';
-    
             data.forEach(item => {
                 const commentCard = document.createElement('div');
                 commentCard.classList.add('comment-card');
                 
                 const cardHeader = document.createElement('div');
                 cardHeader.classList.add('comment-card-header');
-                cardHeader.innerHTML = `
-                    <strong>${item.name}</strong> 
-                    <span class="comment-email">(${item.email})</span>
-                `;
+                const headerStrong = document.createElement('strong');
+                headerStrong.textContent = item.name;
+                const headerEmail = document.createElement('span');
+                headerEmail.classList.add('comment-email');
+                headerEmail.textContent = ` (${item.email})`;
+                cardHeader.appendChild(headerStrong);
+                cardHeader.appendChild(headerEmail);
     
                 const cardBody = document.createElement('div');
                 cardBody.classList.add('comment-card-body');
-                cardBody.innerHTML = `
-                    <p>${item.body}</p>
-                `;
+                const bodyParagraph = document.createElement('p');
+                bodyParagraph.textContent = item.body;
+                cardBody.appendChild(bodyParagraph);
     
                 commentCard.appendChild(cardHeader);
                 commentCard.appendChild(cardBody);
