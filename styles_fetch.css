@@ -218,3 +218,72 @@ th, td {
     padding: 12px;
     text-align: left;
 }
+
+#resultContainer {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.comment-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.comment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.comment-card-header {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #007BFF;
+}
+
+.comment-card-header strong {
+    font-weight: bold;
+}
+
+.comment-email {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.comment-card-body {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.comment-card-body p {
+    margin: 0;
+}
+
+#preloader {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+    color: #007BFF;
+}
+
+#error-message {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 16px;
+    color: red;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding-top: 100px;
+    }
+
+    #resultContainer {
+        grid-template-columns: 1fr;
+    }
+}
